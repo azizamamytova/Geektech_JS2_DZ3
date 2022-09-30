@@ -89,6 +89,35 @@ const modalTimeout = setTimeout(openModal, 40000);
 
 
 
+const form = document.querySelectorAll("form");
+
+
+const pisData = (form) => {
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const request = new XMLHttpRequest();
+        request.open("POST", "server.php");
+        request.setRequestHeader("Content-type", "application/json");
+
+        const formData = new FormData(form);
+
+        const obj = {};
+        formData.forEach((item, i ) => {
+            obj[i] = item;
+        });  
+        const json = JSON.stringify(obj);
+        request.send(json);
+        request.addEventListener("load", () => {
+            if(request.status === 200) {
+                console.log(request.response);
+            } else {
+                console.log("error");
+            }
+        });
+    });
+};
+
 
 
 
